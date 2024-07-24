@@ -1,1 +1,0 @@
-export type TSortByOptions = 'relevance' | 'popularity' | 'publishedAt'

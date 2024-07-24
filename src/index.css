@@ -8,8 +8,21 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: #f7fafc;
-  color: #151515;
+  /* COLORS */
+  --tropical-indigo-500: #a896fa;
+  --tropical-indigo-400: #bcaefb;
+  --tropical-indigo-300: #d0c7fc;
+  --tropical-indigo-200: #efecfe;
+  --tropical-indigo-100: #f7fafc;
+
+  --raisin-black-500: #18171e;
+  --raisin-black-400: #2b2a36;
+  --raisin-black-300: #494757;
+  --raisin-black-200: #cbc9d5;
+  --raisin-black-100: #eeedf1;
+
+  background-color: var(--tropical-indigo-100);
+  color: var(--raisin-black-500);
 }
 
 *, *::before, *::after {
