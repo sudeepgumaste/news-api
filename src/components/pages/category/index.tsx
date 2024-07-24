@@ -11,7 +11,7 @@ import sortByOptions, { TSortByOptions } from "../../../constants/sort-by";
 
 import styles from "./styles.module.css";
 
-const SearchPage: React.FC = () => {
+const CategoryPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const sortBy = searchParams.get("sortBy") as TSortByOptions;
@@ -68,4 +68,4 @@ const SearchPage: React.FC = () => {
   );
 };
 
-export default SearchPage;
+export default CategoryPage;

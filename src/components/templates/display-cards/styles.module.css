@@ -1,0 +1,30 @@
+.centerSection {
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+
+  max-width: 948px;
+  width: 100%;
+  margin: auto;
+
+  h1 {
+    margin-bottom: 32px;
+    font-size: 24px;
+    color: var(--tropical-indigo-500);
+  }
+}
+
+.articleList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  margin: auto;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 1024px) {
+  .articleList {
+    grid-template-columns: repeat(3, 300px);
+  }
+}

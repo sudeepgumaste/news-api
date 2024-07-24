@@ -1,0 +1,67 @@
+.skeletonLoaderArticleCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  border-radius: 16px;
+  border-color: transparent;
+  border-width: 1px;
+  border-style: solid;
+
+  width: 300px;
+  background-color: #fff;
+
+  transition: border-color 0.2s ease-in-out;
+
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    border-color: var(--raisin-black-200);
+  }
+}
+
+.skeletonLoaderArticleCardImage {
+  width: 100%;
+  height: 200px;
+  border-radius: 16px 16px 0 0;
+
+  background: linear-gradient(to right, var(--raisin-black-100), var(--raisin-black-200), var(--raisin-black-100)); 
+  background-size: 200%;
+  background-position: left;
+  animation: load 1s ease-out 0s infinite normal;
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.skeletonLoaderArticleCardText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding: 20px;
+  padding-top: 0;
+}
+
+.skeletonLoaderArticleCardTitle {
+  width: 100%;
+  height: 16px;
+  border-radius: 4px;
+  background-color: var(--raisin-black-100);
+}
+
+.skeletonLoaderArticleCardDescription {
+  width: 100%;
+  height: 16px;
+  border-radius: 4px;
+  background-color: var(--raisin-black-100);
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    background-position: right;
+  }
+  50% {
+    background-position: left;
+  }
+}

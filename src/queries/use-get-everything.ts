@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { TApiError, TApiResponse, TNewsArticle } from "../types/api-response";
-import { TSortByOptions } from "../types/api-request";
+import { TApiResponse, TNewsArticle } from "../types/api-response";
+import { TSortByOptions } from "../constants/sort-by";
 
 type Params = {
   q: string;
@@ -24,7 +24,7 @@ const getEverything = async ({
   }
 
   url.searchParams.set("apiKey", import.meta.env.VITE_API_KEY);
-  url.searchParams.set("pageSize", "10");
+  url.searchParams.set("pageSize", "9");
   url.searchParams.set("page", page);
 
   if(!q) {
@@ -50,6 +50,7 @@ const useGetEverything = ({page = '1', q, sortBy}: Params): UseQueryResult<Succe
     queryKey: ["everything", page, q, sortBy],
     queryFn: () => getEverything({page, q, sortBy}),
     enabled: !!q,
+    staleTime: Infinity,
   })
 }
 
