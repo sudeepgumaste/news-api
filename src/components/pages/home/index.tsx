@@ -16,6 +16,7 @@ const HomePage:React.FC = () => {
     if (!searchTerm) return
     const searchParams = new URLSearchParams()
     searchParams.set('q', searchTerm)
+    searchParams.set('page', '1')
     navigate(`/search?${searchParams.toString()}`)
   }
 
