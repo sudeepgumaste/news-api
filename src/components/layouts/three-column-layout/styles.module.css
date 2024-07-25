@@ -11,7 +11,8 @@
 
 .centerSection {
   margin: auto;
-  padding: 24px 0;
+  padding: 24px;
+  max-width: 100dvw;
 }
 
 .leftChild, .rightChild {
@@ -30,7 +31,7 @@
 
   border-bottom: 1px solid var(--raisin-black-100);
 
-  max-width: 100%;
+  max-width: 100dvw;
   overflow-x: auto;
 
   white-space: nowrap;

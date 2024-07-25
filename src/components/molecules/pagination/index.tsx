@@ -24,7 +24,7 @@ const Pagination: React.FC<Props> = ({ totalPages, currentPage }) => {
     <nav aria-label="Page navigation" data-testid="pagination">
       <ReactPaginate
         className={styles.pagination}
-        previousLabel="Previous"
+        previousLabel="Prev"
         nextLabel="Next"
         breakLabel="..."
         pageCount={totalPages}
