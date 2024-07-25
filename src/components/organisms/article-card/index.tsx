@@ -17,7 +17,7 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
   url,
   publishedAt,
   urlToImage,
-  author,
+  source,
 }) => {
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
   const [_urlToImage, set_urlToImage] = useState(urlToImage);
@@ -73,7 +73,7 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
                           description: description,
                           url: url,
                           publishedAt: publishedAt,
-                          author: author,
+                          source: source,
                         });
                       }
                       return !prevValue
@@ -89,9 +89,9 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
           )}
         </div>
         <div className={styles.footer}>
-          {author && (
-            <p className={styles.author} title={author}>
-              {author.length > 20 ? `${author.slice(0, 20)}...` : author}
+          {source && (
+            <p className={styles.source} title={source.name}>
+              {source.name.length > 20 ? `${source.name.slice(0, 20)}...` : source.name}
             </p>
           )}
           <p className={styles.publishedAt}>

@@ -1,24 +1,26 @@
-import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import React, { lazy, Suspense } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import HomePage from '../components/pages/home'
-import SearchPage from '../components/pages/search'
-import CategoryPage from '../components/pages/category'
+const HomePage = lazy(() => import("../components/pages/home"));
+const SearchPage = lazy(() => import("../components/pages/search"));
+const CategoryPage = lazy(() => import("../components/pages/category"));
 
-import Container from '../components/layouts/container'
+import Container from "../components/layouts/container";
 
-const Pages:React.FC = () => {
+const Pages: React.FC = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route element={<Container />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/category/:category" element={<CategoryPage />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route element={<Container />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/category/:category" element={<CategoryPage />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default Pages
+export default Pages;
