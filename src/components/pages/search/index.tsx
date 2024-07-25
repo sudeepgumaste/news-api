@@ -10,6 +10,7 @@ import useGetEverything from "../../../queries/use-get-everything";
 import sortByOptions, { TSortByOptions } from "../../../constants/sort-by";
 
 import styles from "./styles.module.css";
+import ThreeColumnLayout from "../../layouts/three-column-layout";
 
 const SearchPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -30,13 +31,18 @@ const SearchPage: React.FC = () => {
   }, [data?.totalResults]);
 
   return (
-    <div className={styles.layout}>
-      <aside className={styles.leftSection}>
-        <div>
+    <ThreeColumnLayout
+      left={
+        <>
           <p className={styles.sortByLabel}>Sort By</p>
           <ul className={styles.sortByOptions}>
             {sortByOptions.map((option) => (
-              <li key={option.value} className={clsx(styles.sortByOption, { [styles.active]: option.value === sortBy })}>
+              <li
+                key={option.value}
+                className={clsx(styles.sortByOption, {
+                  [styles.active]: option.value === sortBy,
+                })}
+              >
                 <button
                   onClick={() => {
                     setSearchParams((prev) => {
@@ -50,21 +56,23 @@ const SearchPage: React.FC = () => {
               </li>
             ))}
           </ul>
-        </div>
-      </aside>
-      <DisplayCards 
-        cards={data?.articles}
-        isLoading={isLoading}
-        isError={isError}
-        totalPages={totalPages}
-        title={`Your Results for: ${searchParams.get("q")}`}
-      />
-      <aside className={styles.rightSection}>
-        <div>
+        </>
+      }
+      center={
+        <DisplayCards
+          cards={data?.articles}
+          isLoading={isLoading}
+          isError={isError}
+          totalPages={totalPages}
+          title={`Your Results for: ${searchParams.get("q")}`}
+        />
+      }
+      right={
+        <>
           <Link to="/">Go Back</Link>
-        </div>
-      </aside>
-    </div>
+        </>
+      }
+    />
   );
 };
 

@@ -1,4 +1,4 @@
-export default [
+const categories = [
   {
     slug: 'business',
     name: 'Business',
@@ -27,4 +27,8 @@ export default [
     slug: 'general',
     name: 'General',
   }
-];
+] as const;
+
+export type TCategory = typeof categories[number]['slug'];
+
+export default categories;

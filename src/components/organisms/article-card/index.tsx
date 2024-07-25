@@ -40,7 +40,7 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
       </button> */}
       <a href={url} onPointerLeave={() => setDescriptionExpanded(false)}>
         <img
-          src={_urlToImage}
+          src={_urlToImage ?? PlaceholderImage}
           onError={handleImageMissing}
           alt={title}
           loading="lazy"

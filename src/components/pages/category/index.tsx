@@ -1,25 +1,25 @@
 import React, { useMemo } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 
 import clsx from "clsx";
 
+import CategoryCard from "../../atoms/category-card";
 import DisplayCards from "../../templates/display-cards";
+import ThreeColumnLayout from "../../layouts/three-column-layout";
 
-import useGetEverything from "../../../queries/use-get-everything";
+import useGetTopHeadlines from "../../../queries/use-get-top-headlines";
 
-import sortByOptions, { TSortByOptions } from "../../../constants/sort-by";
+import categories, { TCategory } from "../../../constants/categories";
 
 import styles from "./styles.module.css";
 
 const CategoryPage: React.FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const { category } = useParams();
 
-  const sortBy = searchParams.get("sortBy") as TSortByOptions;
-
-  const { data, isLoading, isError } = useGetEverything({
-    q: searchParams.get("q") ?? "",
+  const { data, isLoading, isError } = useGetTopHeadlines({
+    category: category as TCategory,
     page: searchParams.get("page") ?? "1",
-    sortBy: sortBy ?? "test",
   });
 
   const totalPages = useMemo(() => {
@@ -29,42 +29,48 @@ const CategoryPage: React.FC = () => {
     return 0;
   }, [data?.totalResults]);
 
+  if (
+    categories.find((_category) => _category.slug === category) === undefined ||
+    category === undefined
+  ) {
+    return <div>Category not found</div>;
+  }
+
   return (
-    <div className={styles.layout}>
-      <aside className={styles.leftSection}>
-        <div>
-          <p className={styles.sortByLabel}>Sort By</p>
+    <ThreeColumnLayout
+      left={
+        <>
+          <p className={styles.sortByLabel}>Categories</p>
           <ul className={styles.sortByOptions}>
-            {sortByOptions.map((option) => (
-              <li key={option.value} className={clsx(styles.sortByOption, { [styles.active]: option.value === sortBy })}>
-                <button
-                  onClick={() => {
-                    setSearchParams((prev) => {
-                      prev.set("sortBy", option.value);
-                      return prev;
-                    });
-                  }}
+            {categories.map((_category) => (
+              <li key={_category.slug} className={clsx(styles.sortByOption)}>
+                <CategoryCard
+                  slug={_category.slug}
+                  isActive={_category.slug === category}
+                  isResponsive={true}
                 >
-                  {option.label}
-                </button>
+                  {_category.name}
+                </CategoryCard>
               </li>
             ))}
           </ul>
-        </div>
-      </aside>
-      <DisplayCards 
-        cards={data?.articles}
-        isLoading={isLoading}
-        isError={isError}
-        totalPages={totalPages}
-        title={`Your Results for: ${searchParams.get("q")}`}
-      />
-      <aside className={styles.rightSection}>
-        <div>
+        </>
+      }
+      center={
+        <DisplayCards
+          cards={data?.articles}
+          isLoading={isLoading}
+          isError={isError}
+          totalPages={totalPages}
+          title={categories.find((_category) => _category.slug === category)?.name ?? ''}
+        />
+      }
+      right={
+        <>
           <Link to="/">Go Back</Link>
-        </div>
-      </aside>
-    </div>
+        </>
+      }
+    />
   );
 };
 
