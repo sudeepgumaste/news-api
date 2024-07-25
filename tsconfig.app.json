@@ -17,11 +17,14 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    /* Tests */
+    "types": ["vitest/globals"],
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src"],
 }

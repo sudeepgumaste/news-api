@@ -21,7 +21,7 @@ const Pagination: React.FC<Props> = ({ totalPages, currentPage }) => {
   if(!totalPages) return null
 
   return (
-    <nav aria-label="Page navigation">
+    <nav aria-label="Page navigation" data-testid="pagination">
       <ReactPaginate
         className={styles.pagination}
         previousLabel="Previous"
@@ -29,7 +29,6 @@ const Pagination: React.FC<Props> = ({ totalPages, currentPage }) => {
         breakLabel="..."
         pageCount={totalPages}
         onPageChange={(pageNumber) => {
-          console.log({ pageNumber });
           setSearchParams((prevSearchParams) => {
             const newSearchParams = new URLSearchParams(prevSearchParams);
             newSearchParams.set("page", (pageNumber.selected + 1).toString());

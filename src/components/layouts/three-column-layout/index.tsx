@@ -15,15 +15,15 @@ const ThreeColumnLayout: React.FC<Props> = ({
 }) => {
   return (
     <div className={styles.layout}>
-      <aside className={styles.leftSection}>
+      <aside className={styles.leftSection} data-testid="left-section">
         <div className={styles.leftChild}>
           {left}
         </div>
       </aside>
-      <div className={styles.centerSection}>
+      <div className={styles.centerSection} data-testid="center-section">
         {center}
       </div>
-      <aside className={styles.rightSection}>
+      <aside className={styles.rightSection} data-testid="right-section">
         <div className={styles.rightChild}>
           {right}
         </div>

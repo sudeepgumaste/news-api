@@ -4,7 +4,7 @@ import styles from './styles.module.css'
 
 const SkeletonLoaderArticleCard:React.FC = () => {
   return (
-    <div className={styles.skeletonLoaderArticleCard}>
+    <div className={styles.skeletonLoaderArticleCard} data-testid="skeleton-loader-article-card">
       <div className={styles.skeletonLoaderArticleCardImage}></div>
       <div className={styles.skeletonLoaderArticleCardText}>
         <div className={styles.skeletonLoaderArticleCardTitle}></div>

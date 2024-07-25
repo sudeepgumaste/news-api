@@ -25,13 +25,27 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
 
   const maxDescriptionLength = 80;
 
-  const handleBookmark = () => {
-    console.log("bookmark");
-  };
-
   const handleImageMissing = () => {
     set_urlToImage(PlaceholderImage);
   };
+
+  const handleExpandDescription = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setDescriptionExpanded((prevValue) => {
+      if(!prevValue){
+        trackUserActivity("read-more", {
+          q: searchParams.get("q"),
+          title: title,
+          description: description,
+          url: url,
+          publishedAt: publishedAt,
+          source: source,
+        });
+      }
+      return !prevValue
+    });
+    e.preventDefault();
+  }
 
   if (title === "[Removed]") {
     return null;
@@ -39,9 +53,6 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
 
   return (
     <article className={styles.article}>
-      {/* <button onClick={handleBookmark}>
-        
-      </button> */}
       <a href={url} onPointerLeave={() => setDescriptionExpanded(false)}>
         <img
           src={_urlToImage ?? PlaceholderImage}
@@ -49,6 +60,7 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
           alt={title}
           loading="lazy"
           className={styles.image}
+          data-testid="image"
         />
         <div className={styles.textSection}>
           <p className={styles.title} title={title}>
@@ -63,23 +75,7 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
               </span>
               {description?.length > maxDescriptionLength && (
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDescriptionExpanded((prevValue) => {
-                      if(!prevValue){
-                        trackUserActivity("read-more", {
-                          q: searchParams.get("q"),
-                          title: title,
-                          description: description,
-                          url: url,
-                          publishedAt: publishedAt,
-                          source: source,
-                        });
-                      }
-                      return !prevValue
-                    });
-                    e.preventDefault();
-                  }}
+                  onClick={handleExpandDescription}
                   className={styles.readMore}
                 >
                   {descriptionExpanded ? "Read Less" : "Read More"}
