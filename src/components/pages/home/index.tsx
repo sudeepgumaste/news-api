@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import CategoryCard from '../../atoms/category-card'
 import categories from '../../../constants/categories'
+import trackUserActivity from '../../../utils/track-user-activity'
 
 import styles from './styles.module.css'
 
@@ -14,6 +15,7 @@ const HomePage:React.FC = () => {
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!searchTerm) return
+    trackUserActivity('search', { searchTerm })
     const searchParams = new URLSearchParams()
     searchParams.set('q', searchTerm)
     searchParams.set('page', '1')

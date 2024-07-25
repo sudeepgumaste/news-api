@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { TCategory } from "../../../constants/categories";
+import trackUserActivity from "../../../utils/track-user-activity";
 
 import styles from "./styles.module.css";
 import clsx from "clsx";
@@ -26,6 +27,7 @@ const CategoryCard: React.FC<Props> = ({
         [styles.active]: isActive,
         [styles.responsive]: isResponsive,
       })}
+      onClick={() => trackUserActivity('click-category', { category: slug })}
     >
       {children}
     </Link>

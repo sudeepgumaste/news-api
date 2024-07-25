@@ -11,6 +11,7 @@ import sortByOptions, { TSortByOptions } from "../../../constants/sort-by";
 
 import styles from "./styles.module.css";
 import ThreeColumnLayout from "../../layouts/three-column-layout";
+import trackUserActivity from "../../../utils/track-user-activity";
 
 const SearchPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -45,6 +46,7 @@ const SearchPage: React.FC = () => {
               >
                 <button
                   onClick={() => {
+                    trackUserActivity("sort-by", {order: option.value, q: searchParams.get("q")});
                     setSearchParams((prev) => {
                       prev.set("sortBy", option.value);
                       return prev;

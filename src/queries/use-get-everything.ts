@@ -50,7 +50,7 @@ const useGetEverything = ({page = '1', q, sortBy}: Params): UseQueryResult<Succe
     queryKey: ["everything", page, q, sortBy],
     queryFn: () => getEverything({page, q, sortBy}),
     enabled: !!q,
-    staleTime: Infinity,
+    staleTime: import.meta.env.VITE_APP_MODE === "development" ? Infinity : 1000 * 60 * 60,
   })
 }
 

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import clsx from "clsx";
 import dayjs from "dayjs";
 
 import { TNewsArticle } from "../../../types/api-response";
 
 import PlaceholderImage from "../../../assets/images/placeholder.jpeg";
+
+import trackUserActivity from "../../../utils/track-user-activity";
 
 import styles from "./styles.module.css";
 
@@ -17,7 +20,8 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
   author,
 }) => {
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
-  const [_urlToImage, set_urlToImage] = useState(urlToImage)
+  const [_urlToImage, set_urlToImage] = useState(urlToImage);
+  const [searchParams] = useSearchParams();
 
   const maxDescriptionLength = 80;
 
@@ -26,11 +30,11 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
   };
 
   const handleImageMissing = () => {
-    set_urlToImage(PlaceholderImage)
-  }
+    set_urlToImage(PlaceholderImage);
+  };
 
-  if(title === "[Removed]"){
-    return null
+  if (title === "[Removed]") {
+    return null;
   }
 
   return (
@@ -61,7 +65,19 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    setDescriptionExpanded(!descriptionExpanded);
+                    setDescriptionExpanded((prevValue) => {
+                      if(!prevValue){
+                        trackUserActivity("read-more", {
+                          q: searchParams.get("q"),
+                          title: title,
+                          description: description,
+                          url: url,
+                          publishedAt: publishedAt,
+                          author: author,
+                        });
+                      }
+                      return !prevValue
+                    });
                     e.preventDefault();
                   }}
                   className={styles.readMore}
@@ -73,11 +89,11 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
           )}
         </div>
         <div className={styles.footer}>
-          {
-            author && (
-              <p className={styles.author} title={author}>{author.length > 20 ? `${author.slice(0, 20)}...` : author}</p>
-            )
-          }
+          {author && (
+            <p className={styles.author} title={author}>
+              {author.length > 20 ? `${author.slice(0, 20)}...` : author}
+            </p>
+          )}
           <p className={styles.publishedAt}>
             {dayjs(publishedAt).format("MMM D, YYYY")}
           </p>

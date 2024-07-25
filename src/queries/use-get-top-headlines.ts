@@ -44,7 +44,7 @@ const useGetTopHeadlines = ({page = '1', category}: Params): UseQueryResult<Succ
     queryKey: ["top-headlines", page, category],
     queryFn: () => getTopHeadlines({page, category}),
     enabled: !!category,
-    staleTime: Infinity,
+    staleTime: import.meta.env.VITE_APP_MODE === "development" ? Infinity : 1000 * 60 * 60,
   })
 }
 
