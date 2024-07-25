@@ -10,7 +10,7 @@ type Params = {
 
 type SuccessResponse = TApiResponse<TNewsArticle>;
 
-const getEverything = async ({
+export const getEverything = async ({
   q,
   page = '1',
   sortBy = 'relevance',

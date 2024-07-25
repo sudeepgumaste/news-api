@@ -22,6 +22,7 @@ const CategoryCard: React.FC<Props> = ({
 }) => {
   return (
     <Link
+      data-testid="category-card"
       to={`/category/${slug}`}
       className={clsx(styles.categoryCard, {
         [styles.active]: isActive,

@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import { cleanup, render, RenderOptions } from "@testing-library/react";
 import { afterEach } from "vitest";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 
 afterEach(() => {
   cleanup();
@@ -12,11 +12,22 @@ afterEach(() => {
 
 const queryClient = new QueryClient();
 
-const customRender = (ui: React.ReactElement, options?: RenderOptions) => {
+type CustomRenderOptions = {
+  route?: string;
+} & Omit<RenderOptions, "wrapper">;
+
+const customRender = (
+  ui: React.ReactElement,
+  options?: CustomRenderOptions
+) => {
   return render(ui, {
     wrapper: ({ children }) => (
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>{children}</BrowserRouter>
+        <MemoryRouter
+          initialEntries={options?.route ? [options?.route] : undefined}
+        >
+          {children}
+        </MemoryRouter>
       </QueryClientProvider>
     ),
     ...options,

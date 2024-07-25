@@ -1,7 +1,8 @@
 import React from "react";
-import { render, screen, userEvent } from "../../../setup-tests/vitest-setup";
+import { fireEvent, render, screen, userEvent } from "../../../setup-tests/vitest-setup";
 import NewsArticleCard from ".";
 import PlaceholderImage from "../../../assets/images/placeholder.jpeg";
+import trackUserActivity from "../../../utils/track-user-activity";
 
 
 const mockArticle = {
@@ -14,6 +15,9 @@ const mockArticle = {
   author: "John Doe",
   content: null,
 };
+
+
+vi.mock('../../../utils/track-user-activity');
 
 describe("NewsArticleCard", () => {
   it("renders without crashing", () => {
@@ -127,5 +131,41 @@ describe("NewsArticleCard", () => {
     );
     const image = screen.queryByTestId("image");
     expect(image).not.toBeInTheDocument();
+  });
+
+  it("renders truncated source name if it exceeds 20 characters", () => {
+    render(
+      <NewsArticleCard
+        {...mockArticle}
+        source={{ name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", id: "https://example.com" }}
+      />
+    );
+    const source = screen.getByText("Lorem ipsum dolor si...");
+    expect(source).toBeInTheDocument();
+  });
+
+  it("renders full source name if it does not exceed 20 characters", () => {
+    render(
+      <NewsArticleCard
+        {...mockArticle}
+      />
+    );
+    const source = screen.getByText("Example");
+    expect(source).toBeInTheDocument();
+  });
+
+  it("tracks user activity when user clicks on read more button", () => {
+    render(
+      <NewsArticleCard
+        {...mockArticle}
+        description={
+          "Lorem ipsum dolar sit amit, Lorem ipsum dolar sit amit, Lorem ipsum dolar sit amit, Lorem ipsum dolar sit amit"
+        }
+      />
+    );
+    const readMoreButton = screen.getByText("Read More");
+    fireEvent.click(readMoreButton);
+
+    expect(trackUserActivity).toHaveBeenCalledOnce();
   });
 });

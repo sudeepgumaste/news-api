@@ -66,7 +66,7 @@ const SearchPage: React.FC = () => {
           isLoading={isLoading}
           isError={isError}
           totalPages={totalPages}
-          title={`Your Results for: ${searchParams.get("q")}`}
+          title={`Your results for: ${searchParams.get("q")}`}
         />
       }
       right={

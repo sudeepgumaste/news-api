@@ -32,7 +32,8 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
   const handleExpandDescription = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setDescriptionExpanded((prevValue) => {
-      if(!prevValue){
+      if (!prevValue) {
+        console.log("track");
         trackUserActivity("read-more", {
           q: searchParams.get("q"),
           title: title,
@@ -42,17 +43,17 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
           source: source,
         });
       }
-      return !prevValue
+      return !prevValue;
     });
     e.preventDefault();
-  }
+  };
 
   if (title === "[Removed]") {
     return null;
   }
 
   return (
-    <article className={styles.article}>
+    <article className={styles.article} data-testid="article-card">
       <a href={url} onPointerLeave={() => setDescriptionExpanded(false)}>
         <img
           src={_urlToImage ?? PlaceholderImage}
@@ -87,7 +88,9 @@ const NewsArticleCard: React.FC<TNewsArticle> = ({
         <div className={styles.footer}>
           {source && (
             <p className={styles.source} title={source.name}>
-              {source.name.length > 20 ? `${source.name.slice(0, 20)}...` : source.name}
+              {source.name.length > 20
+                ? `${source.name.slice(0, 20)}...`
+                : source.name}
             </p>
           )}
           <p className={styles.publishedAt}>
