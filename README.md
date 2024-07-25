@@ -104,4 +104,4 @@ I’ve built this app using React with TypeScript to ensure type safety and main
 - The app memoizes the certain calculations to avoid recalculating them on every render.
 - Provided I had more time I had implemented the description collapsible feature such that it does not result in layout shifts.
 - Uses react-router-dom's Outlet for constructing the routes. If the design had used a comprehensive layout, this would prevent the react router from re-rendering the entire page on every route change.
-
+- The app uses pagination to display set of articles on the page. Apps like this need good seo and infinite loading is not a good idea. If there was a condition to use jut infinite scroll, I would have used a virtualized list so as to not hurt the performance.
