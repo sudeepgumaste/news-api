@@ -4,6 +4,7 @@ import Pages from './routes'
 import useLogMemoryUsage from './hooks/use-log-memory-usage';
 
 import './App.css'
+import { reportWebVitals } from './report-web-vitals';
 
 const queryClient = new QueryClient();
 
@@ -16,5 +17,5 @@ function App() {
     
   )
 }
-
+reportWebVitals(console.log);
 export default App

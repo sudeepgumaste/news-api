@@ -30,6 +30,12 @@ const DisplayCards: React.FC<Props> = ({
     <div className={styles.centerSection}>
       <h1>{title}</h1>
       <div className={styles.articleList}>
+        {
+          isError &&
+          <div className={styles.errorMessage}>
+            <p>Something went wrong. Please try again later.</p>
+          </div>
+        }
         {isLoading &&
           Array.from({ length: 9 }).map((_, index) => (
             <SkeletonLoaderArticleCard key={index} />
